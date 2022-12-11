@@ -7,6 +7,7 @@ module.exports = {
     mode: "development",
     devtool: 'cheap-module-source-map',
     entry: {
+        popup: './src/pages/popup.ts',
         main: './src/main.ts',
     },
     module: {
@@ -25,9 +26,9 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: "src/pages/hello.html",
-            filname: "hello.html",
-            chunks: ["hello"],
+            template: "src/pages/popup.html",
+            filename: "popup.html",
+            chunks: ["popup"],
         }),
         new CopyPlugin({
             patterns: [{

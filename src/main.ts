@@ -1,5 +1,5 @@
 import { getAction } from "./ai";
-import { getBigBlindValue, isMyTurn } from "./ui";
+import { getBigBlindValue, getState, isMyTurn } from "./ui";
 import { performAction, sanitizeAction } from "./action";
 
 
@@ -17,10 +17,13 @@ function startBotLoop() {
             if (isMyTurn()) {
                 console.log("bot turn");
                 
-                let action = getAction();
+                const state = getState();
+                console.log("state: ", state);
+
+                const action = getAction(state);
                 console.log("bot action:", action);
 
-                let sanitizedAction = sanitizeAction(action);
+                const sanitizedAction = sanitizeAction(action, state);
                 console.log("sanitized bot action:", sanitizedAction);
 
                 performAction(sanitizedAction);

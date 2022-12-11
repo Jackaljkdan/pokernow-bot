@@ -1,5 +1,5 @@
 
-export function getAction(): Action {
+export function getAction(state: State): Action {
     return {
         type: "CheckOrFold",
     };

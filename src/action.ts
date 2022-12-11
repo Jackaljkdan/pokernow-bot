@@ -1,4 +1,4 @@
-import { canCheck, check, fold, getBigBlindValue } from "./ui";
+import { canCheck, check, fold } from "./ui";
 
 export function performAction(action: Action) {
     if (action.type === "CheckOrFold") {
@@ -9,7 +9,7 @@ export function performAction(action: Action) {
     }
 }
 
-export function sanitizeAction(action: Action) {
+export function sanitizeAction(action: Action, state: State) {
     let sanitized = {...action};
 
     switch (sanitized.type) {
@@ -24,7 +24,7 @@ export function sanitizeAction(action: Action) {
 
     if (sanitized.type === "Raise") {
         if (sanitized.raiseAmount == undefined || sanitized.raiseAmount <= 0)
-            sanitized.raiseAmount = getBigBlindValue();
+            sanitized.raiseAmount = state.bigBlind;
     }
 
     return sanitized;

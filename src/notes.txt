@@ -7,10 +7,10 @@ type Card = {
     suit: CardSuit;
 }
 
-// card value
+// hand card value
 document.querySelectorAll(".you-player .card .value")[0].textContent;
 
-// card suit
+// hand card suit
 document.querySelectorAll(".you-player .card .suit")[0].textContent;
 
 

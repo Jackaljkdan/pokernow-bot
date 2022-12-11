@@ -1,4 +1,7 @@
 const {resolve} = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
     mode: "development",
@@ -20,4 +23,18 @@ module.exports = {
         filename: '[name].js',
         path: resolve(__dirname, 'dist'),
     },
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: "src/pages/hello.html",
+            filname: "hello.html",
+            chunks: ["hello"],
+        }),
+        new CopyPlugin({
+            patterns: [{
+                from: "public",
+                to: ".",
+            }],
+        }),
+        new CleanWebpackPlugin(),
+    ],
 }

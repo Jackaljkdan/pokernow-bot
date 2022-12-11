@@ -1,14 +1,12 @@
-
-export function isMyTurn() {
-    return document.querySelector(".action-signal") !== null;
-}
-
-export function getBigBlindValue() {
-    return parseInt(document.querySelectorAll(".blind-value .chips-value")[1].textContent ?? "");
-}
+import { canCheck, check, fold, getBigBlindValue } from "./ui";
 
 export function performAction(action: Action) {
-
+    if (action.type === "CheckOrFold") {
+        if (canCheck())
+            check();
+        else
+            fold();
+    }
 }
 
 export function sanitizeAction(action: Action) {

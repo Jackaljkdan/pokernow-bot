@@ -2,6 +2,8 @@ import { getAction } from "./ai";
 import { isMyTurn, performAction, sanitizeAction } from "./utils";
 
 
+console.log("hello this is main.ts speaking");
+
 setInterval(
     function mainLoop() {
         if (isMyTurn()) {

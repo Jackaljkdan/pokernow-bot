@@ -3,47 +3,50 @@ import { getBigBlindValue, getState, isMyTurn } from "./ui";
 import { performAction, sanitizeAction } from "./action";
 
 
-let botLoopInterval: NodeJS.Timer | undefined;
+let botLoopTimeout: NodeJS.Timer | undefined;
 
 console.log("hello this is main.ts speaking");
 
 function startBotLoop() {
+    stopBotLoop();
 
     console.log("starting bot");
     console.log("big blind: " + getBigBlindValue());
 
-    botLoopInterval = setInterval(
-        function botLoop() {
-            if (isMyTurn()) {
-                console.log("bot turn");
-                
-                const state = getState();
-                console.log("state: ", state);
+    function botLoop() {
+        if (isMyTurn()) {
+            console.log("bot turn");
+            
+            const state = getState();
+            console.log("state: ", state);
 
-                let action: Action | undefined;
+            let action: Action | undefined;
 
-                try {
-                    action = getAction(state);
-                    console.log("bot action:", action);
-                }
-                catch (err) {
-                    action = undefined;
-                    console.error("bot error:", err);
-                }
-
-                const sanitizedAction = sanitizeAction(action, state);
-                console.log("sanitized bot action:", sanitizedAction);
-
-                performAction(sanitizedAction);
+            try {
+                action = getAction(state);
+                console.log("bot action:", action);
             }
-        },
-        500,
-    );
+            catch (err) {
+                action = undefined;
+                console.error("bot error:", err);
+            }
+
+            const sanitizedAction = sanitizeAction(action, state);
+            console.log("sanitized bot action:", sanitizedAction);
+
+            performAction(sanitizedAction, botLoop);
+        }
+        else {
+            botLoopTimeout = setTimeout(botLoop, 500);
+        }
+    }
+
+    botLoop();
 }
 
 function stopBotLoop() {
-    clearInterval(botLoopInterval);
-    botLoopInterval = undefined;
+    clearTimeout(botLoopTimeout);
+    botLoopTimeout = undefined;
 }
 
 chrome.runtime.onMessage.addListener((message: ChromeMessage, sender, callback) => {
@@ -55,7 +58,7 @@ chrome.runtime.onMessage.addListener((message: ChromeMessage, sender, callback) 
             stopBotLoop();
             break;
         case "get_bot_status":
-            let status: BotStatus = botLoopInterval === undefined
+            let status: BotStatus = botLoopTimeout === undefined
                 ? "off"
                 : "playing"
             ;

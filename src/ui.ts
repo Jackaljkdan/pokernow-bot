@@ -97,35 +97,46 @@ export function call() {
 
 function withRaiseMenu(action: () => void) {
     document.querySelector<HTMLButtonElement>("button.raise")?.click();
-    action();
+    setTimeout(
+        () => {
+            action();
+            document.querySelector<HTMLButtonElement>('.raise-controller-form input[type="submit"]')?.click();
+        },
+        100,
+    );
 }
 
-export function minRaise() {
+export function minRaise(callback: () => void) {
     withRaiseMenu(() => {
         document.querySelectorAll<HTMLButtonElement>(".default-bet-buttons button")[0].click();
+        callback?.();
     });
 }
 
-export function halfPotRaise() {
+export function halfPotRaise(callback: () => void) {
     withRaiseMenu(() => {
         document.querySelectorAll<HTMLButtonElement>(".default-bet-buttons button")[1].click();
+        callback?.();
     });
 }
 
-export function tqPotRaise() {
+export function tqPotRaise(callback: () => void) {
     withRaiseMenu(() => {
         document.querySelectorAll<HTMLButtonElement>(".default-bet-buttons button")[2].click();
+        callback?.();
     });
 }
 
-export function potRaise() {
+export function potRaise(callback: () => void) {
     withRaiseMenu(() => {
         document.querySelectorAll<HTMLButtonElement>(".default-bet-buttons button")[3].click();
+        callback?.();
     });
 }
 
-export function allInRaise() {
+export function allInRaise(callback: () => void) {
     withRaiseMenu(() => {
         document.querySelectorAll<HTMLButtonElement>(".default-bet-buttons button")[4].click();
+        callback?.();
     });
 }

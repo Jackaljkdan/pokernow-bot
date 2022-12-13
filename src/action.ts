@@ -1,32 +1,36 @@
 import { allInRaise, call, canCheck, check, fold, halfPotRaise, minRaise, potRaise, tqPotRaise } from "./ui";
 
-export function performAction(action: Action) {
+export function performAction(action: Action, callback: () => void) {
     if (action.type === "check_or_fold") {
         if (canCheck())
             check();
         else
             fold();
+
+        callback?.();
     }
     else if (action.type === "call") {
         call();
+        callback?.();
     }
     else {
         switch (action.raiseAmount) {
             case "min":
-                minRaise();
+            default:
+                minRaise(callback);
                 break;
             case "1/2_pot":
-                halfPotRaise();
+                halfPotRaise(callback);
                 break;
             case "3/4_pot":
-                tqPotRaise();
+                tqPotRaise(callback);
                 break;
             case "pot":
-                potRaise();
+                potRaise(callback);
                 break;
             // TODO: overbet
             case "all_in":
-                allInRaise();
+                allInRaise(callback);
                 break;
         }
     }

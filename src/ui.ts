@@ -40,15 +40,42 @@ export function getHandCards() {
     }
 }
 
+export function getBoardCards() {
+    const cards = [...document.querySelectorAll(".table-cards .card")];
+
+    try {
+        return cards.map(parseCard);
+    }
+    catch (err) {
+        throw new Error("error parsing board cards: " + err);
+    }
+}
+
 export function getBigBlindValue() {
     return parseInt(document.querySelectorAll(".blind-value .chips-value")[1].textContent ?? "");
+}
+
+export function getToCallValue() {
+    const callText = document.querySelector("button.call")?.textContent;
+
+    if (!callText)
+        return 0;
+
+    if (!callText.toLowerCase().indexOf("call"))
+        return 0;
+
+    if (callText.indexOf(" ") < 0)
+        return 0;
+
+    return parseInt(callText.split(" ")[1]);
 }
 
 export function getState(): State {
     return {
         hand: getHandCards(),
-        board: [],
+        board: getBoardCards(),
         bigBlind: getBigBlindValue(),
+        toCall: getToCallValue(),
     };
 }
 

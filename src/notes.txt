@@ -16,7 +16,7 @@ document.querySelectorAll(".you-player .card .suit")[0].textContent;
 // board cards
 document.querySelectorAll(".table-cards .card");
 
-// last raise amount
+// to call value
 document.querySelector("button.call").textContent;  // number after space
 
 

@@ -23,4 +23,5 @@ type State = {
     hand: Card[],
     board: Card[],
     bigBlind: number,
+    toCall: number,
 };

@@ -10,7 +10,7 @@ export function performAction(action: Action) {
 }
 
 export function sanitizeAction(action: Action | undefined, state: State) {
-    let sanitized = {...action};
+    let sanitized = {...action!};
 
     switch (sanitized.type) {
         case "call":

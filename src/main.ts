@@ -20,8 +20,16 @@ function startBotLoop() {
                 const state = getState();
                 console.log("state: ", state);
 
-                const action = getAction(state);
-                console.log("bot action:", action);
+                let action: Action | undefined;
+
+                try {
+                    action = getAction(state);
+                    console.log("bot action:", action);
+                }
+                catch (err) {
+                    action = undefined;
+                    console.error("bot error:", err);
+                }
 
                 const sanitizedAction = sanitizeAction(action, state);
                 console.log("sanitized bot action:", sanitizedAction);

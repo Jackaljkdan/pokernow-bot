@@ -1,8 +1,9 @@
 type ActionType = "check_or_fold" | "call" | "raise";
+type RaiseAmount = "min" | "1/2_pot" | "3/4_pot" | "pot" | "overbet" | "all_in";
 
 type Action = {
     type: ActionType,
-    raiseAmount?: number,
+    raiseAmount?: RaiseAmount,
 };
 
 type ChromeMessage = "start_bot" | "kill_bot" | "get_bot_status";

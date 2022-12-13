@@ -90,3 +90,42 @@ export function check() {
 export function fold() {
     document.querySelector<HTMLButtonElement>("button.fold")?.click();
 }
+
+export function call() {
+    document.querySelector<HTMLButtonElement>("button.call")?.click();
+}
+
+function withRaiseMenu(action: () => void) {
+    document.querySelector<HTMLButtonElement>("button.raise")?.click();
+    action();
+}
+
+export function minRaise() {
+    withRaiseMenu(() => {
+        document.querySelectorAll<HTMLButtonElement>(".default-bet-buttons button")[0].click();
+    });
+}
+
+export function halfPotRaise() {
+    withRaiseMenu(() => {
+        document.querySelectorAll<HTMLButtonElement>(".default-bet-buttons button")[1].click();
+    });
+}
+
+export function tqPotRaise() {
+    withRaiseMenu(() => {
+        document.querySelectorAll<HTMLButtonElement>(".default-bet-buttons button")[2].click();
+    });
+}
+
+export function potRaise() {
+    withRaiseMenu(() => {
+        document.querySelectorAll<HTMLButtonElement>(".default-bet-buttons button")[3].click();
+    });
+}
+
+export function allInRaise() {
+    withRaiseMenu(() => {
+        document.querySelectorAll<HTMLButtonElement>(".default-bet-buttons button")[4].click();
+    });
+}

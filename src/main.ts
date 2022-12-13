@@ -1,4 +1,4 @@
-import { getAction } from "./ai";
+import { getAction } from "./ai/ai";
 import { getBigBlindValue, getState, isMyTurn } from "./ui";
 import { performAction, sanitizeAction } from "./action";
 

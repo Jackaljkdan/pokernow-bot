@@ -13,6 +13,12 @@ document.querySelectorAll(".you-player .card .value")[0].textContent;
 // hand card suit
 document.querySelectorAll(".you-player .card .suit")[0].textContent;
 
+// board cards
+document.querySelectorAll(".table-cards .card");
+
+// last raise amount
+document.querySelector("button.call").textContent;  // number after space
+
 
 // it is my turn
 document.querySelector(".action-signal") !== null;
@@ -48,3 +54,5 @@ document.querySelector(".raise-controller .increase").click();
 document.querySelector('.raise-controller-form input[type="submit"]').click();
 
 
+// show hand
+document.querySelector('button.show-your-hand');

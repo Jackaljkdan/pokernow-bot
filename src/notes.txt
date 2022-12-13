@@ -29,6 +29,10 @@ document.querySelector(".table-pot-size .main-value .chips-value")?.textContent;
 // big blind value
 document.querySelectorAll(".blind-value .chips-value")[1].textContent;
 
+// hand rank
+document.querySelector(".player-hand-message").textContent
+
+
 // current phase pot
 document.querySelector(".table-pot-size .add-on .chips-value")?.textContent;
 

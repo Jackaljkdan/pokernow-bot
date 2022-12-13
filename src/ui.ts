@@ -1,4 +1,5 @@
 import { AceCode, cardValueCodeFromName, isCardValueCodeValid } from "./cards";
+import { parseHandRank } from "./rank";
 
 export function isMyTurn() {
     return document.querySelector(".action-signal") !== null;
@@ -70,8 +71,14 @@ export function getToCallValue() {
     return parseInt(callText.split(" ")[1]);
 }
 
+export function getHandRank() {
+    const rawRank = document.querySelector(".player-hand-message")?.textContent ?? "";
+    return parseHandRank(rawRank);
+}
+
 export function getState(): State {
     return {
+        handRank: getHandRank(),
         hand: getHandCards(),
         board: getBoardCards(),
         bigBlind: getBigBlindValue(),

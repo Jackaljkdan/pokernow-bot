@@ -20,6 +20,14 @@ type Card = {
     suit: CardSuit,
 };
 
+type HandRankName = "high" | "pair" | "two_pair" | "three" | "straight" | "flush" | "full" | "four" | "straight_flush" | "royal_flush";
+type HandRankCode = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
+
+type HandRank = {
+    name: HandRankName,
+    code: HandRankCode,
+};
+
 type PhaseName = "preflop" | "flop" | "turn" | "river";
 type PhaseCode = 0 | 1 | 2 | 3;
 
@@ -29,6 +37,7 @@ type Phase = {
 };
 
 type State = {
+    handRank: HandRank,
     hand: Card[],
     board: Card[],
     bigBlind: number,

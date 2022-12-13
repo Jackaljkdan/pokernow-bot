@@ -19,6 +19,14 @@ type Card = {
     suit: CardSuit,
 };
 
+type PhaseName = "preflop" | "flop" | "turn" | "river";
+type PhaseCode = 0 | 1 | 2 | 3;
+
+type Phase = {
+    name: PhaseName,
+    code: PhaseCode,
+};
+
 type State = {
     hand: Card[],
     board: Card[],

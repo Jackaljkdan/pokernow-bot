@@ -19,11 +19,8 @@ export const RiverPhase: Phase = {
     code: 3,
 };
 
-export function getPhase(state: State) {
-    if (!state.board)
-        return PreflopPhase;
-
-    switch (state.board.length) {
+export function getPhaseFromBoardLength(length: number) {
+    switch (length) {
         case 0:
         default:
             return PreflopPhase;
@@ -38,8 +35,4 @@ export function getPhase(state: State) {
 
 export function isPhaseBefore(src: Phase, target: Phase) {
     return src.code < target.code;
-}
-
-export function isStatePhaseBefore(state: State, phase: Phase) {
-    return isPhaseBefore(getPhase(state), phase);
 }

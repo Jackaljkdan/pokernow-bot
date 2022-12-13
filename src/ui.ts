@@ -1,5 +1,6 @@
 import { AceCode, cardValueCodeFromName, isCardValueCodeValid } from "./cards";
 import { parseHandRank } from "./rank";
+import { getPhaseFromBoardLength } from "./state";
 
 export function isMyTurn() {
     return document.querySelector(".action-signal") !== null;
@@ -78,8 +79,14 @@ export function getHandRank() {
     return parseHandRank(rawRank);
 }
 
+export function getPhase() {
+    const boardCardsElements = document.querySelectorAll(".table-cards .card");
+    return getPhaseFromBoardLength(boardCardsElements.length);
+}
+
 export function getState(): State {
     return {
+        phase: getPhase(),
         handRank: getHandRank(),
         hand: getHandCards(),
         board: getBoardCards(),

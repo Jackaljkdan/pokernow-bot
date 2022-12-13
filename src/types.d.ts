@@ -41,6 +41,7 @@ type Phase = {
 };
 
 type State = {
+    phase: Phase,
     handRank: HandRank,
     hand: Card[],
     board: Card[],

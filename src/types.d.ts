@@ -14,9 +14,13 @@ type CardValueCode = 14 | 13 | 12 | 11 | 10 | 9 | 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 
 type CardValueName = "A" | "K" | "Q" | "J" | "10" | "9" | "8" | "7" | "6" | "5" | "4" | "3" | "2";
 type CardSuit = "c" | "s" | "d" | "h";
 
+type CardValue = {
+    name: CardValueName,
+    code: CardValueCode,
+}
+
 type Card = {
-    valueName: CardValueName,
-    valueCode: CardValueCode,
+    value: CardValue,
     suit: CardSuit,
 };
 

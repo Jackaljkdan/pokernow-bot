@@ -22,8 +22,10 @@ export function parseCard(element: Element): Card {
         throw new Error("invalid card value code: " + rawValue);
 
     return {
-        valueName,
-        valueCode,
+        value: {
+            name: valueName,
+            code: valueCode,
+        },
         suit: rawSuit as CardSuit,
     };
 }

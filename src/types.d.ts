@@ -1,4 +1,4 @@
-type ActionType = "CheckOrFold" | "Call" | "Raise";
+type ActionType = "check_or_fold" | "call" | "raise";
 
 type Action = {
     type: ActionType,

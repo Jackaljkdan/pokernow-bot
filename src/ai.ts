@@ -1,6 +1,6 @@
 
 export function getAction(state: State): Action {
     return {
-        type: "CheckOrFold",
+        type: "check_or_fold",
     };
 }

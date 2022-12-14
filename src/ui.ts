@@ -1,4 +1,4 @@
-import { AceCode, cardValueCodeFromName, isCardValueCodeValid } from "./cards";
+import { cardValueCodeFromName, isCardValueCodeValid } from "./cards";
 import { parseHandRank } from "./rank";
 import { getPhaseFromBoardLength } from "./state";
 
@@ -65,10 +65,10 @@ export function getToCallValue() {
     if (!callText)
         return 0;
 
-    if (!callText.toLowerCase().indexOf("call"))
+    if (!callText.toLowerCase().includes("call"))
         return 0;
 
-    if (callText.indexOf(" ") < 0)
+    if (callText.includes(" "))
         return 0;
 
     return parseInt(callText.split(" ")[1]);
@@ -122,37 +122,43 @@ function withRaiseMenu(action: () => void) {
     );
 }
 
+function getBetButtons() {
+    const buttons = document.querySelectorAll<HTMLButtonElement>(".default-bet-buttons button");
+    console.log("bet buttons", buttons);
+    return buttons;
+}
+
 export function minRaise(callback: () => void) {
     withRaiseMenu(() => {
-        document.querySelectorAll<HTMLButtonElement>(".default-bet-buttons button")[0].click();
+        getBetButtons()[0].click();
         callback?.();
     });
 }
 
 export function halfPotRaise(callback: () => void) {
     withRaiseMenu(() => {
-        document.querySelectorAll<HTMLButtonElement>(".default-bet-buttons button")[1].click();
+        getBetButtons()[1].click();
         callback?.();
     });
 }
 
 export function tqPotRaise(callback: () => void) {
     withRaiseMenu(() => {
-        document.querySelectorAll<HTMLButtonElement>(".default-bet-buttons button")[2].click();
+        getBetButtons()[2].click();
         callback?.();
     });
 }
 
 export function potRaise(callback: () => void) {
     withRaiseMenu(() => {
-        document.querySelectorAll<HTMLButtonElement>(".default-bet-buttons button")[3].click();
+        getBetButtons()[3].click();
         callback?.();
     });
 }
 
 export function allInRaise(callback: () => void) {
     withRaiseMenu(() => {
-        document.querySelectorAll<HTMLButtonElement>(".default-bet-buttons button")[4].click();
+        getBetButtons()[4].click();
         callback?.();
     });
 }

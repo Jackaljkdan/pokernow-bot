@@ -34,7 +34,7 @@ function startBotLoop() {
             const sanitizedAction = sanitizeAction(action, state);
             console.log("sanitized bot action:", sanitizedAction);
 
-            performAction(sanitizedAction, botLoop);
+            performAction(sanitizedAction, () => setTimeout(botLoop, 500));
         }
         else {
             botLoopTimeout = setTimeout(botLoop, 500);

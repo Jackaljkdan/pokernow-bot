@@ -1,7 +1,5 @@
+import { ifThenElseAction } from "./ifThenElseAi";
 
 export function getAction(state: State): Action {
-    return {
-        type: "raise",
-        raiseAmount: "min",
-    };
+    return ifThenElseAction(state);
 }

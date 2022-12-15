@@ -45,6 +45,7 @@ type State = {
     handRank: HandRank,
     hand: Card[],
     board: Card[],
+    handPlusBoard: Card[],
     bigBlind: number,
     toCall: number,
 };

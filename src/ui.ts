@@ -85,11 +85,15 @@ export function getPhase() {
 }
 
 export function getState(): State {
+    const hand = getHandCards();
+    const board = getBoardCards();
+
     return {
         phase: getPhase(),
         handRank: getHandRank(),
-        hand: getHandCards(),
-        board: getBoardCards(),
+        hand,
+        board,
+        handPlusBoard: [...hand, ...board],
         bigBlind: getBigBlindValue(),
         toCall: getToCallValue(),
     };

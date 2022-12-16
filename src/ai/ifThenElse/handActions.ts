@@ -46,17 +46,15 @@ export function bluffHandAction(state: State): Action {
     if (state.toCall > 0) {
         return probabilisticAction("bluff-c", state, zeroFill({
             checkFoldProbability: 0.9,
-            potRaiseProbability: 0.1/3,
-            overbetProbability: 0.1/3,
-            allInProbability: 0.1/3,
+            potRaiseProbability: 0.1 / 2,
+            allInProbability: 0.1 / 2,
         }));
     }
     else {
         return probabilisticAction("bluff", state, zeroFill({
             checkFoldProbability: 0.8,
-            potRaiseProbability: 0.2/3,
-            overbetProbability: 0.2/3,
-            allInProbability: 0.2/3,
+            potRaiseProbability: 0.2 / 2,
+            allInProbability: 0.2 / 2,
         }));
     }
 }

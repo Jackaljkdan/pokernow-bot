@@ -22,13 +22,14 @@ export function performAction(action: Action, callback: () => void) {
             case "1/2_pot":
                 halfPotRaise(callback);
                 break;
-            case "3/4_pot":
-                tqPotRaise(callback);
-                break;
+            // TODO: usare 3/4 pot?
+            // case "3/4_pot":
+            //     tqPotRaise(callback);
+            //     break;
             case "pot":
                 potRaise(callback);
                 break;
-            // TODO: overbet
+            // TODO: usare overbet?
             case "all_in":
                 allInRaise(callback);
                 break;

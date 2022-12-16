@@ -3,9 +3,9 @@ const ProbabilisticActionArgs = {
     callProbability: 0,
     minRaiseProbability: 0,
     halfPotRaiseProbability: 0,
-    tqPotRaiseProbability: 0,
+    // tqPotRaiseProbability: 0,
     potRaiseProbability: 0,
-    overbetProbability: 0,
+    // overbetProbability: 0,
     allInProbability: 0,
 };
 
@@ -20,9 +20,9 @@ const probabilityToAction: ProbabilityToAction = {
     callProbability: { type: "call" },
     minRaiseProbability: { type: "raise", raiseAmount: "min" },
     halfPotRaiseProbability: { type: "raise", raiseAmount: "1/2_pot" },
-    tqPotRaiseProbability: { type: "raise", raiseAmount: "3/4_pot" },
+    // tqPotRaiseProbability: { type: "raise", raiseAmount: "3/4_pot" },
     potRaiseProbability: { type: "raise", raiseAmount: "pot" },
-    overbetProbability: { type: "raise", raiseAmount: "overbet" },
+    // overbetProbability: { type: "raise", raiseAmount: "overbet" },
     allInProbability: { type: "raise", raiseAmount: "all_in" },
 };
 

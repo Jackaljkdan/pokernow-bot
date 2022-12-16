@@ -41,7 +41,11 @@ export function probabilisticAction(name: string, state: State, args: Probabilis
         const probability = normalized[key];
 
         if (random < probability) {
-            console.log(`"probabilistic action (${name})`, args, normalized, random);
+            console.log(`"probabilistic action (${name})`, {
+                input: args,
+                normalized,
+                random,
+            });
             return probabilityToAction[key];
         }
 

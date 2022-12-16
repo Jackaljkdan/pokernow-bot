@@ -23,22 +23,16 @@ export function strongHandAction(state: State): Action {
 }
 
 export function riskyHandAction(state: State): Action {
-    // TODO: raise less likely
     return probabilisticAction("risky", state, uniformFill({
-        checkFoldProbability: state.toCall > 0
-            ? 0.2
-            : undefined
-        ,
+        checkFoldProbability: state.toCall > 0 ? 0.3 : 0.5,
+        callProbability: 0.3,
     }));
 }
 
 export function weakHandAction(state: State): Action {
-    // TODO: raise less likely
     return probabilisticAction("weak", state, uniformFill({
-        checkFoldProbability: state.toCall > 0
-            ? 0.33
-            : undefined
-        ,
+        checkFoldProbability: state.toCall > 0 ? 0.5 : 0.7,
+        callProbability: 0.2,
     }));
 }
 

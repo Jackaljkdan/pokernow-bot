@@ -60,6 +60,7 @@ export function sanitizeAction(action: Action | undefined, state: State) {
             case "overbet":
             case "all_in":
                 // ok, no problem here
+                break;
             default:
                 sanitized.raiseAmount = "min";
                 break;

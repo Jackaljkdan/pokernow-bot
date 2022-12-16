@@ -28,6 +28,16 @@ export function pairAction(state: State): Action {
             : state.hand[1]
         : highestBoardCard
     ;
+    const flushOrOpen = hasFlushDrawOrOpenEndedStraight(state.handPlusBoard);
+
+    console.log("pair hand state", {
+        myPair,
+        highestBoardCard,
+        isTopPair,
+        isHandPair,
+        kicker,
+        flushOrOpen,
+    });
 
     if (state.phase.code < RiverPhase.code) {
         if (hasFlushDrawOrOpenEndedStraight(state.handPlusBoard)) {

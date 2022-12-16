@@ -34,7 +34,7 @@ export function riskyHandAction(state: State): Action {
 
 export function weakHandAction(state: State): Action {
     // TODO: raise less likely
-    return probabilisticAction("risky", state, uniformFill({
+    return probabilisticAction("weak", state, uniformFill({
         checkFoldProbability: state.toCall > 0
             ? 0.33
             : undefined

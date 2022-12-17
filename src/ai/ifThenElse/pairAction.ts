@@ -58,6 +58,13 @@ export function pairAction(state: State): Action {
         }
     }
     else {  // river
+        if (isOneCardFlushOrStraightPossible(state.board)) {
+            if (isTopPair)
+                return weakHandAction(state);
+            else
+                return bluffHandAction(state);
+        }
+
         if (isTopPair && isHandPair)
             return strongHandAction(state);
         else if (isTopPair && kicker.value.code >= KingCode)

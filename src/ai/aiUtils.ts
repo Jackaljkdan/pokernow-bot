@@ -63,8 +63,18 @@ export function isOneCardStraightPossible(cards: Card[]) {
 }
 
 export function isOpenEndedStraightPresent(cards: Card[]) {
-    // TODO: fai
-    return false;
+    // TODO: gestisci asso in scala A2345
+
+    if (cards.length < 4)
+        return false;
+
+    const sorted = sortInPlaceAscending([...cards]);
+    const consecutives = findFirstConsecutives(sorted, 0);
+
+    if (consecutives === null)
+        return false;
+
+    return consecutives.count >= 4;
 }
 
 type Consecutives = {

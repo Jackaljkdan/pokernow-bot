@@ -25,7 +25,7 @@ export function isOneCardFlushPossible(cards: Card[]) {
 
 export function isOneCardStraightPossible(cards: Card[]) {
     // TODO: gestisci asso in scala A2345
-    
+
     if (cards.length < 4)
         return false;
 
@@ -132,7 +132,7 @@ export function getLowestCard(cards: Card[]) {
     let min: Card | null = null;
 
     for (const c of cards)
-        if (min === null || c.value.code > min.value.code)
+        if (min === null || c.value.code < min.value.code)
             min = c;
     
     return min;

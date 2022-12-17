@@ -1,7 +1,8 @@
-import { AceCode, JackCode } from "../../cards";
+import { AceCode, JackCode, QueenCode } from "../../cards";
+import { getHighestCard, getLowestCard } from "../aiUtils";
 import { lerp } from "../lerp";
 import { probabilisticAction, uniformFill } from "../probabilisticAction";
-import { bestHandAction, bluffHandAction, riskyHandAction, strongHandAction } from "./handActions";
+import { bestHandAction, bluffHandAction, riskyHandAction, strongHandAction, weakHandAction } from "./handActions";
 
 
 export function preflopAction(state: State): Action {
@@ -31,18 +32,14 @@ function pairPreflopAction(state: State): Action {
 }
 
 function nonPairPreflopAction(state: State): Action {
-    const highestCard = state.hand[0].value.code > state.hand[1].value.code
-        ? state.hand[0]
-        : state.hand[1]
-    ;
+    const highestCard = getHighestCard(state.hand)!;
+    const lowestCard = getLowestCard(state.hand)!;
 
-    const lowestCard = state.hand[0].value.code > state.hand[1].value.code
-        ? state.hand[1]
-        : state.hand[0]
-    ;
-
-    if (highestCard.value.code >= 10 && lowestCard.value.code >= 10)
+    if (lowestCard.value.code >= QueenCode)
         return strongHandAction(state);
+
+    if (lowestCard.value.code >= 10)
+        return riskyHandAction(state);
     
     const delta = highestCard.value.code - lowestCard.value.code;
 
@@ -50,12 +47,8 @@ function nonPairPreflopAction(state: State): Action {
     if (delta >= 5)
         return bluffHandAction(state);
 
-    if (lowestCard.value.code >= 10)
-        return strongHandAction(state);
-
-    // TODO: differenziare ulteriormente
     if (highestCard.value.code >= JackCode)
-        return riskyHandAction(state);
+        return weakHandAction(state);
 
     return bluffHandAction(state);
 }

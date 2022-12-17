@@ -106,6 +106,9 @@ export function findFirstConsecutives(sortedCards: Card[], startIndex = 0) {
         }
     }
     
+    if (consecutives.count > 1)
+        return consecutives;
+    
     return null;
 }
 

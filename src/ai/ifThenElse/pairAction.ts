@@ -47,14 +47,20 @@ export function pairAction(state: State): Action {
                 return riskyHandAction(state);
         }
         else {
-            if (isTopPair)
-                return riskyHandAction(state);
-            else
-                return weakHandAction(state);
+            if (isTopPair) {
+                if (isHandPair)
+                    return strongHandAction(state);
+                else
+                    return riskyHandAction(state);
+            }
+            
+            return weakHandAction(state);
         }
     }
     else {  // river
-        if (isTopPair && kicker.value.code >= KingCode)
+        if (isTopPair && isHandPair)
+            return strongHandAction(state);
+        else if (isTopPair && kicker.value.code >= KingCode)
             return riskyHandAction(state);
         else if (isTopPair)
             return weakHandAction(state);

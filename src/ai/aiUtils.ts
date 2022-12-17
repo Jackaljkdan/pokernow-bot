@@ -24,13 +24,79 @@ export function isOneCardFlushPossible(cards: Card[]) {
 }
 
 export function isOneCardStraightPossible(cards: Card[]) {
-    // TODO: fai
+    // TODO: gestisci asso in scala A2345
+    
+    if (cards.length < 4)
+        return false;
+
+    const sorted = sortInPlaceAscending([...cards]);
+    const consecutives = findFirstConsecutives(sorted, 0);
+   
+    if (consecutives === null)
+        return false;
+
+    if (consecutives.count >= 4)
+        return true;
+
+    if (consecutives.count === 2) {
+        const followingConsecutives = findFirstConsecutives(cards, consecutives.startIndex + consecutives.count);
+
+        if (followingConsecutives === null)
+            return false;
+        
+        return consecutives.min.value.code + 3 === followingConsecutives.min.value.code;
+    }
+
+    // consecutives count is 3
+
+    if (consecutives.startIndex > 0) {
+        if (consecutives.min.value.code === sorted[consecutives.startIndex - 1].value.code + 2)
+            return true;
+    }
+
+    if (consecutives.startIndex + 3 < sorted.length) {
+        if (consecutives.min.value.code + 4 === sorted[consecutives.startIndex + 3].value.code)
+            return true;
+    }
+
     return false;
 }
 
 export function isOpenEndedStraightPresent(cards: Card[]) {
     // TODO: fai
     return false;
+}
+
+type Consecutives = {
+    startIndex: number,
+    count: number,
+    min: Card,
+};
+
+export function findFirstConsecutives(sortedCards: Card[], startIndex = 0) {
+    if (sortedCards.length - startIndex < 2)
+        return null;
+
+    const consecutives: Consecutives | null = {
+        startIndex,
+        count: 1,
+        min: sortedCards[startIndex],
+    };
+
+    for (let i = startIndex + 1; i < sortedCards.length; i++) {
+        if (sortedCards[i].value.code === consecutives.min.value.code + consecutives.count) {
+            consecutives.count += 1;
+        }
+        else if (consecutives.count === 1) {
+            consecutives.startIndex = i;
+            consecutives.min = sortedCards[i];
+        }
+        else {
+            return consecutives;
+        }
+    }
+    
+    return null;
 }
 
 export function getFirstPair(cards: Card[]): Card[] | null {
@@ -70,4 +136,8 @@ export function getLowestCard(cards: Card[]) {
             min = c;
     
     return min;
+}
+
+export function sortInPlaceAscending(cards: Card[]): Card[] {
+    return cards.sort((c1, c2) => c1.value.code - c2.value.code);
 }

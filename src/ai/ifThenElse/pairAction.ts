@@ -1,6 +1,6 @@
 import { KingCode } from "../../cards";
 import { RiverPhase } from "../../state";
-import { getFirstPair, getHighestCard, hasFlushDrawOrOpenEndedStraight, isOneCardFlushOrStraightPossible } from "../aiUtils"
+import { getFirstPair, getHighestCard, hasFlushDrawOrOpenEndedStraight, isOneCardFlushOrStraightPossible, isOneCardFlushPossible, isOneCardStraightPossible } from "../aiUtils"
 import { bluffHandAction, riskyHandAction, strongHandAction, weakHandAction } from "./handActions";
 import { highCardAction } from "./highCardAction";
 
@@ -10,9 +10,6 @@ export function pairAction(state: State): Action {
 
     if (boardPair)
         return highCardAction(state);
-
-    if (isOneCardFlushOrStraightPossible(state.board))
-        return weakHandAction(state);
 
     const myPair = getFirstPair(state.handPlusBoard);
 
@@ -29,6 +26,8 @@ export function pairAction(state: State): Action {
         : highestBoardCard
     ;
     const flushOrOpen = hasFlushDrawOrOpenEndedStraight(state.handPlusBoard);
+    const oneCardFlush = isOneCardFlushPossible(state.board);
+    const oneCardStraight = isOneCardStraightPossible(state.board);
 
     console.log("pair hand state", {
         myPair,
@@ -37,6 +36,8 @@ export function pairAction(state: State): Action {
         isHandPair,
         kicker,
         flushOrOpen,
+        oneCardFlush,
+        oneCardStraight,
     });
 
     if (state.phase.code < RiverPhase.code) {
@@ -47,6 +48,13 @@ export function pairAction(state: State): Action {
                 return riskyHandAction(state);
         }
         else {
+            if (isOneCardFlushOrStraightPossible(state.board)) {
+                if (isTopPair)
+                    return weakHandAction(state);
+                else
+                    return bluffHandAction(state);
+            }
+
             if (isTopPair) {
                 if (isHandPair)
                     return strongHandAction(state);

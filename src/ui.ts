@@ -65,13 +65,15 @@ export function getToCallValue() {
     if (!callText)
         return 0;
 
-    if (!callText.toLowerCase().includes("call"))
+    const lowercasedCallText = callText.toLowerCase();
+
+    if (!lowercasedCallText.includes("call"))
         return 0;
 
-    if (callText.includes(" "))
+    if (!lowercasedCallText.includes(" "))
         return 0;
 
-    return parseInt(callText.split(" ")[1]);
+    return parseInt(lowercasedCallText.split(" ")[1]);
 }
 
 export function getHandRank() {

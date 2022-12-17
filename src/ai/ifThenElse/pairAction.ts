@@ -32,10 +32,6 @@ export function pairAction(state: State): Action {
         isTopPair,
         isHandPair,
         kicker,
-        flushDraw: isOneCardFlushPossible(state.handPlusBoard),
-        openStraight: isOpenEndedStraightPresent(state.handPlusBoard),
-        oneCardFlush: isOneCardFlushPossible(state.board),
-        oneCardStraight: isOneCardStraightPossible(state.board),
     });
 
     if (state.phase.code < RiverPhase.code) {

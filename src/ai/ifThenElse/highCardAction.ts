@@ -3,14 +3,7 @@ import { hasFlushDrawOrOpenEndedStraight, isOneCardFlushPossible, isOneCardStrai
 import { bluffHandAction, riskyHandAction, weakHandAction } from "./handActions";
 
 
-export function highCardAction(state: State): Action {
-    console.log("high card hand state", {
-        flushDraw: isOneCardFlushPossible(state.handPlusBoard),
-        openStraight: isOpenEndedStraightPresent(state.handPlusBoard),
-        oneCardFlush: isOneCardFlushPossible(state.board),
-        oneCardStraight: isOneCardStraightPossible(state.board),
-    });
-    
+export function highCardAction(state: State): Action {    
     if (state.phase.code < RiverPhase.code) {
         if (hasFlushDrawOrOpenEndedStraight(state.handPlusBoard)) {
             if (state.phase === FlopPhase)

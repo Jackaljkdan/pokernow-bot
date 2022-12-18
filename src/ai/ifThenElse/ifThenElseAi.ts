@@ -1,10 +1,11 @@
-import { FullHouseRank, HighCardRank, PairRank, TwoPairRank } from "../../rank";
+import { FullHouseRank, HighCardRank, PairRank, ThreeOfKindRank, TwoPairRank } from "../../rank";
 import { PreflopPhase } from "../../state";
 import { isOneCardFlushPossible, isOneCardStraightPossible, isOpenEndedStraightPresent } from "../aiUtils";
 import { bestHandAction, bluffHandAction } from "./handActions";
 import { highCardAction } from "./highCardAction";
 import { pairAction } from "./pairAction";
 import { preflopAction } from "./preflopActions";
+import { threeAction } from "./threeAction";
 import { twoPairAction } from "./twoPairAction";
 
 
@@ -30,6 +31,8 @@ export function ifThenElseAction(state: State): Action {
             return pairAction(state);
         case TwoPairRank:
             return twoPairAction(state);
+        case ThreeOfKindRank:
+            return threeAction(state);
         default:
             return bluffHandAction(state);
     }

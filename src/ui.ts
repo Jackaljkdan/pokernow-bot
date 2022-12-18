@@ -118,7 +118,16 @@ export function call() {
 }
 
 function withRaiseMenu(action: () => void) {
-    document.querySelector<HTMLButtonElement>("button.raise")?.click();
+    const raiseButton = document.querySelector<HTMLButtonElement>("button.raise")!;
+
+    if (raiseButton.disabled) {
+        call();
+        action();
+        return;
+    }
+
+    raiseButton.click();
+
     setTimeout(
         () => {
             action();
@@ -136,35 +145,35 @@ function getBetButtons() {
 
 export function minRaise(callback: () => void) {
     withRaiseMenu(() => {
-        getBetButtons()[0].click();
+        getBetButtons()[0]?.click();
         callback?.();
     });
 }
 
 export function halfPotRaise(callback: () => void) {
     withRaiseMenu(() => {
-        getBetButtons()[1].click();
+        getBetButtons()[1]?.click();
         callback?.();
     });
 }
 
 export function tqPotRaise(callback: () => void) {
     withRaiseMenu(() => {
-        getBetButtons()[2].click();
+        getBetButtons()[2]?.click();
         callback?.();
     });
 }
 
 export function potRaise(callback: () => void) {
     withRaiseMenu(() => {
-        getBetButtons()[3].click();
+        getBetButtons()[3]?.click();
         callback?.();
     });
 }
 
 export function allInRaise(callback: () => void) {
     withRaiseMenu(() => {
-        getBetButtons()[4].click();
+        getBetButtons()[4]?.click();
         callback?.();
     });
 }

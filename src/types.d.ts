@@ -47,5 +47,8 @@ type State = {
     board: Card[],
     handPlusBoard: Card[],
     bigBlind: number,
+    stack: number,
+    pot: number,
+    prevPhasePot: number,
     toCall: number,
 };

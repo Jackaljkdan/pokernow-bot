@@ -86,6 +86,21 @@ export function getPhase() {
     return getPhaseFromBoardLength(boardCardsElements.length);
 }
 
+export function getStack() {
+    const stackText = document.querySelector(".table-player.you-player .table-player-stack")?.textContent;
+    return parseInt(stackText ?? "0");
+}
+
+export function getTotalPot() {
+    const potText = document.querySelector(".table-pot-size .add-on .chips-value")?.textContent;
+    return parseInt(potText ?? "0");
+}
+
+export function getPrevPhasePot() {
+    const prevPotText = document.querySelector(".table-pot-size .main-value .chips-value")?.textContent;
+    return parseInt(prevPotText ?? "0");
+}
+
 export function getState(): State {
     const hand = getHandCards();
     const board = getBoardCards();
@@ -97,6 +112,9 @@ export function getState(): State {
         board,
         handPlusBoard: [...hand, ...board],
         bigBlind: getBigBlindValue(),
+        stack: getStack(),
+        pot: getTotalPot(),
+        prevPhasePot: getPrevPhasePot(),
         toCall: getToCallValue(),
     };
 }

@@ -33,7 +33,7 @@ document.querySelectorAll(".blind-value .chips-value")[1].textContent;
 document.querySelector(".player-hand-message").textContent
 
 
-// current phase pot
+// total pot
 document.querySelector(".table-pot-size .add-on .chips-value")?.textContent;
 
 // call or min bet

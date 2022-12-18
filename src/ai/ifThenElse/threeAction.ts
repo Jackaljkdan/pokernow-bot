@@ -1,5 +1,6 @@
 import { AceCode, KingCode } from "../../cards";
-import { getHighestCard, getPairs, getThrees, isOneCardFlushOrStraightPossible } from "../aiUtils";
+import { RiverPhase } from "../../state";
+import { getHighestCard, getPairs, getThrees, hasFlushDrawOrOpenEndedStraight, isOneCardFlushOrStraightPossible } from "../aiUtils";
 import { bestHandAction, riskyHandAction, strongHandAction } from "./handActions";
 import { highCardAction } from "./highCardAction";
 
@@ -23,16 +24,31 @@ export function threeAction(state: State): Action {
     const boardPair = getPairs(state.board)[0];
     const isSet = !boardPair;
 
-    if (isSet)
+    if (isSet) {
+        console.log("three state", {
+            isSet,
+        });
+        
         return strongHandAction(state);
+    }
 
     const kicker = boardPair[0].value.code === state.hand[0].value.code
         ? state.hand[1]
         : state.hand[0]
     ;
 
+    console.log("three state", {
+        isSet,
+        kicker,
+    });
+
     if (kicker.value.code >= KingCode)
         return strongHandAction(state);
-    else
-        return riskyHandAction(state);
+    
+    if (state.phase.code <= RiverPhase.code) {
+        if (hasFlushDrawOrOpenEndedStraight(state.handPlusBoard))
+            return strongHandAction(state);
+    }
+
+    return riskyHandAction(state);
 }

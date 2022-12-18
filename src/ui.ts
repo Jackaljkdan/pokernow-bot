@@ -168,3 +168,7 @@ export function allInRaise(callback: () => void) {
         callback?.();
     });
 }
+
+export function showHandIfPossible() {
+    document.querySelector<HTMLButtonElement>('button.show-your-hand')?.click();
+}

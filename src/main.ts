@@ -1,5 +1,5 @@
 import { getAction } from "./ai/ai";
-import { getBigBlindValue, getState, isMyTurn } from "./ui";
+import { getBigBlindValue, getState, isMyTurn, showHandIfPossible } from "./ui";
 import { performAction, sanitizeAction } from "./action";
 
 
@@ -39,6 +39,8 @@ function startBotLoop() {
         else {
             botLoopTimeout = setTimeout(botLoop, 500);
         }
+
+        showHandIfPossible();
     }
 
     botLoop();

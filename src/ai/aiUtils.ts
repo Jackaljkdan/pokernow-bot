@@ -112,7 +112,7 @@ export function findFirstConsecutives(sortedCards: Card[], startIndex = 0) {
     return null;
 }
 
-export function getFirstPair(cards: Card[]): Card[] | null {
+export function getPairs(cards: Card[]): Card[][] {
     const counts: Record<number, Card[]> = {};
 
     for (const c of cards) {
@@ -121,14 +121,16 @@ export function getFirstPair(cards: Card[]): Card[] | null {
         else
             counts[c.value.code].push(c);
     }
+
+    const pairs: Card[][] = [];
     
     for (const key in counts) {
         const counted = counts[key];
         if (counted.length === 2)
-            return counted;
+            pairs.push(counted);
     }
 
-    return null;
+    return pairs;
 }
 
 export function getHighestCard(cards: Card[]) {

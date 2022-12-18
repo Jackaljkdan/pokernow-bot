@@ -1,19 +1,19 @@
 import { KingCode } from "../../cards";
 import { RiverPhase } from "../../state";
-import { getFirstPair, getHighestCard, hasFlushDrawOrOpenEndedStraight, isOneCardFlushOrStraightPossible, isOneCardFlushPossible, isOneCardStraightPossible, isOpenEndedStraightPresent } from "../aiUtils"
+import { getHighestCard, getPairs, hasFlushDrawOrOpenEndedStraight, isOneCardFlushOrStraightPossible, isOneCardFlushPossible, isOneCardStraightPossible, isOpenEndedStraightPresent } from "../aiUtils"
 import { bluffHandAction, riskyHandAction, strongHandAction, weakHandAction } from "./handActions";
 import { highCardAction } from "./highCardAction";
 
 
 export function pairAction(state: State): Action {
-    const boardPair = getFirstPair(state.board);
+    const boardPairs = getPairs(state.board);
 
-    if (boardPair)
+    if (boardPairs.length > 0)
         return highCardAction(state);
 
-    const myPair = getFirstPair(state.handPlusBoard);
+    const myPair = getPairs(state.handPlusBoard)[0];
 
-    if (!myPair)
+    if (!myPair || myPair.length === 0)
         throw new Error("pair expected but not found " + JSON.stringify(state.handPlusBoard, null, 4));
 
     const highestBoardCard = getHighestCard(state.board)!;

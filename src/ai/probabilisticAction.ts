@@ -26,6 +26,15 @@ const probabilityToAction: ProbabilityToAction = {
     allInProbability: { type: "raise", raiseAmount: "all_in" },
 };
 
+export type CheckCallBasedProbabilisticActionArgs = {
+    checkFoldProbability: number,
+    callProbability: number,
+    remainingMinRaiseShare: number, 
+    remainingHalfPotRaiseShare: number,
+    remainingPotRaiseShare: number,
+    remainingAllInShare: number,
+}
+
 
 export function probabilisticAction(name: string, state: State, args: ProbabilisticActionArgs): Action {
     const copy = {...args};
@@ -65,6 +74,42 @@ function normalize(args: ProbabilisticActionArgs): ProbabilisticActionArgs {
         args[key] /= sum;
 
     return args;
+}
+
+type ToCallDependent = {
+    zero: Omit<ProbabilisticActionArgs, "callProbability">,
+    nonZero: ProbabilisticActionArgs,
+};
+
+export function toCallDependent(state: State, args: ToCallDependent): ProbabilisticActionArgs {
+    if (state.toCall > 0)
+        return args.nonZero;
+    
+    return {
+        ...args.zero,
+        callProbability: 0,
+    };
+}
+
+export function postfixNameToCall(name: string, state: State) {
+    if (state.toCall > 0)
+        return name + "-call";
+    else
+        return name + "-zero";
+}
+
+export function checkCallBased(args: CheckCallBasedProbabilisticActionArgs): ProbabilisticActionArgs {
+    const sum = args.callProbability + args.checkFoldProbability;
+    const remaining = Math.max(1 - sum, 0);
+
+    return {
+        checkFoldProbability: args.checkFoldProbability,
+        callProbability: args.callProbability,
+        minRaiseProbability: remaining * args.remainingMinRaiseShare,
+        halfPotRaiseProbability: remaining * args.remainingHalfPotRaiseShare,
+        potRaiseProbability: remaining * args.remainingPotRaiseShare,
+        allInProbability: remaining * args.remainingAllInShare,
+    };
 }
 
 export function zeroFill(args: Partial<ProbabilisticActionArgs>): ProbabilisticActionArgs {

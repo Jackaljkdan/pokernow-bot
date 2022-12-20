@@ -118,18 +118,18 @@ function semiHighNonPairAction(state: State): Action {
 function trashAction(state: State): Action {
     return probabilisticAction(postfixNameToCall("pre-trash", state), state, toCallDependent(state, {
         zero: {
-            checkFoldProbability: 0.9,
+            checkFoldProbability: 0.98,
             minRaiseProbability: 0,
             halfPotRaiseProbability: 0,
-            potRaiseProbability : state.toCall >= 3 * state.bigBlind ? 0.08 : 0,
+            potRaiseProbability : 0,
             allInProbability: 0.02,
         },
         nonZero: checkCallBased({
-            checkFoldProbability: 0.95,
-            callProbability: 0,
-            remainingMinRaiseShare: 0,
+            checkFoldProbability: 0.85,
+            callProbability: state.toCall <= 3 * state.bigBlind ? 0.07 : 0,
+            remainingMinRaiseShare: state.toCall < 3 * state.bigBlind ? 0.06 : 0,
             remainingHalfPotRaiseShare: 0,
-            remainingPotRaiseShare: state.toCall >= 3 * state.bigBlind ? 0.03 : 0,
+            remainingPotRaiseShare: state.toCall >= 3 * state.bigBlind ? 0.13 : 0,
             remainingAllInShare: 0.02,
         }),
     }));
@@ -145,9 +145,9 @@ function faceAction(state: State): Action {
             allInProbability: 0,
         },
         nonZero: checkCallBased({
-            checkFoldProbability: 0.7,
-            callProbability: state.toCall <= 2 * state.bigBlind ? 0.2 : 0,
-            remainingMinRaiseShare: 0,
+            checkFoldProbability: 0.6,
+            callProbability: state.toCall > state.bigBlind && state.toCall <= 4 * state.bigBlind ? 0.2 : 0,
+            remainingMinRaiseShare: state.toCall <= 4 * state.bigBlind ? 0.2 : 0,
             remainingHalfPotRaiseShare: 0,
             remainingPotRaiseShare: 0,
             remainingAllInShare: 0,

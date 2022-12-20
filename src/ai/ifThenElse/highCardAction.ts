@@ -1,5 +1,5 @@
 import { FlopPhase, RiverPhase } from "../../state";
-import { hasFlushDrawOrOpenEndedStraight, isOneCardFlushPossible, isOneCardStraightPossible, isOpenEndedStraightPresent } from "../aiUtils";
+import { hasFlushDrawOrOpenEndedStraight } from "../aiUtils";
 import { bluffHandAction, riskyHandAction, weakHandAction } from "./handActions";
 
 

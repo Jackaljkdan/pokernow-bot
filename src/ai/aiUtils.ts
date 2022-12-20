@@ -1,3 +1,5 @@
+import { AceCode } from "../cards";
+
 export function isOneCardFlushOrStraightPossible(cards: Card[]) {
     return isOneCardFlushPossible(cards) || isOneCardStraightPossible(cards);
 }
@@ -112,7 +114,54 @@ export function findFirstConsecutives(sortedCards: Card[], startIndex = 0) {
     return null;
 }
 
-export function getCounts(cards: Card[]) {
+export function getSuitCounts(cards: Card[]) {
+    const counts: Partial<Record<CardSuit, Card[]>> = {};
+
+    for (const c of cards) {
+        if (!counts[c.suit])
+            counts[c.suit] = [c];
+        else
+            counts[c.suit]!.push(c);
+    }
+
+    return counts;
+}
+
+export function getHighestSuitCount(cards: Card[]) {
+    const counts = getSuitCounts(cards);
+
+    let max: Card[] = null as any;
+
+    for (const suit in counts)
+        if (max === null || max.length < counts[suit as CardSuit]!.length)
+            max = counts[suit as CardSuit]!;
+
+    return max;
+}
+
+export function getAvailableFlushValues(suitedCards: Card[]) {
+    const available: CardValueCode[] = [];
+
+    for (let i = 2; i < AceCode; i++)
+        available.push(i as CardValueCode);
+
+    for (const c of suitedCards) {
+        const index = available.indexOf(c.value.code);
+        if (index >= 0)
+            available.splice(index, 1);
+    }
+
+    return available;
+}
+
+export function getFirstOfSuit(cards: Card[], suit: CardSuit) {
+    for (const c of cards)
+        if (c.suit === suit)
+            return c;
+    return null;
+}
+
+export function getValueCounts(cards: Card[]) {
     const counts: Record<number, Card[]> = {};
 
     for (const c of cards) {
@@ -126,7 +175,7 @@ export function getCounts(cards: Card[]) {
 }
 
 export function getNs(cards: Card[], n: number) {
-    const counts = getCounts(cards);
+    const counts = getValueCounts(cards);
 
     const ns: Card[][] = [];
     

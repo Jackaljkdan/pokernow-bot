@@ -69,7 +69,7 @@ function highPairAction(state: State): Action {
         },
         nonZero: checkCallBased({
             checkFoldProbability: 0,
-            callProbability: state.toCall >= 3 * state.bigBlind ? 0.5 : 0,
+            callProbability: (state.toCall >= 3 * state.bigBlind) ? 0.5 : 0,
             remainingMinRaiseShare: 0.5,
             remainingHalfPotRaiseShare: 0,
             remainingPotRaiseShare: 0.5,
@@ -89,7 +89,7 @@ function premiumNonPairAction(state: State): Action {
         },
         nonZero: checkCallBased({
             checkFoldProbability: 0,
-            callProbability: state.toCall >= 3 * state.bigBlind ? 0.5 : 0,
+            callProbability: (state.toCall >= 3 * state.bigBlind) ? 0.5 : 0,
             remainingMinRaiseShare: 0.7,
             remainingHalfPotRaiseShare: 0,
             remainingPotRaiseShare: 0.3,
@@ -109,7 +109,7 @@ function semiHighNonPairAction(state: State): Action {
         },
         nonZero: checkCallBased({
             checkFoldProbability: 0,
-            callProbability: state.toCall >= 3 * state.bigBlind ? 0.7 : 0,
+            callProbability: (state.toCall >= 3 * state.bigBlind) ? 0.7 : 0,
             remainingMinRaiseShare: 0.8,
             remainingHalfPotRaiseShare: 0,
             remainingPotRaiseShare: 0.2,
@@ -123,7 +123,7 @@ function highTrashAction(state: State): Action {
     const twoMultiplier = 0.3;
     const nineMultiplier = 1;
     const multiplier = lerp(twoMultiplier, nineMultiplier, (lowestCard.value.code - 2) / 7);
-    
+
     return probabilisticAction(postfixNameToCall("pre-hightrash", state), state, toCallDependent(state, {
         zero: {
             checkFoldProbability: 0.7,
@@ -134,7 +134,7 @@ function highTrashAction(state: State): Action {
         },
         nonZero: checkCallBased({
             checkFoldProbability: 0.6,
-            callProbability: multiplier * (state.toCall > state.bigBlind && state.toCall <= 4 * state.bigBlind ? 0.2 : 0.05),
+            callProbability: multiplier * ((state.toCall > state.bigBlind && state.toCall <= 4 * state.bigBlind) ? 0.2 : 0.05),
             remainingMinRaiseShare: multiplier * (state.toCall <= 4 * state.bigBlind ? 0.2 : 0.05),
             remainingHalfPotRaiseShare: 0,
             remainingPotRaiseShare: 0,
@@ -154,10 +154,10 @@ function pureTrashAction(state: State): Action {
         },
         nonZero: checkCallBased({
             checkFoldProbability: 0.85,
-            callProbability: state.toCall <= 3 * state.bigBlind ? 0.07 : 0,
-            remainingMinRaiseShare: state.toCall < 3 * state.bigBlind ? 0.06 : 0,
+            callProbability: (state.toCall <= 3 * state.bigBlind) ? 0.07 : 0,
+            remainingMinRaiseShare: (state.toCall < 3 * state.bigBlind) ? 0.06 : 0,
             remainingHalfPotRaiseShare: 0,
-            remainingPotRaiseShare: state.toCall >= 3 * state.bigBlind ? 0.13 : 0,
+            remainingPotRaiseShare: (state.toCall >= 3 * state.bigBlind) ? 0.13 : 0,
             remainingAllInShare: 0.02,
         }),
     }));
@@ -174,8 +174,8 @@ function faceAction(state: State): Action {
         },
         nonZero: checkCallBased({
             checkFoldProbability: 0.6,
-            callProbability: state.toCall > state.bigBlind && state.toCall <= 4 * state.bigBlind ? 0.2 : 0.05,
-            remainingMinRaiseShare: state.toCall <= 4 * state.bigBlind ? 0.2 : 0.05,
+            callProbability: (state.toCall > state.bigBlind && state.toCall <= 4 * state.bigBlind) ? 0.2 : 0.05,
+            remainingMinRaiseShare: (state.toCall <= 4 * state.bigBlind) ? 0.2 : 0.05,
             remainingHalfPotRaiseShare: 0,
             remainingPotRaiseShare: 0,
             remainingAllInShare: 0,

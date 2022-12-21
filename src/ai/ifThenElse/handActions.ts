@@ -18,15 +18,15 @@ export function bestHandAction(state: State): Action {
 export function strongHandAction(state: State): Action {
     return probabilisticAction(postfixNameToCall("strong", state), state, toCallDependent(state, {
         zero: {
-            checkFoldProbability: 0.3,
-            minRaiseProbability: 0.3,
+            checkFoldProbability: 0.2,
+            minRaiseProbability: 0.4,
             halfPotRaiseProbability: 0.25,
             potRaiseProbability : 0.12,
             allInProbability: 0.03,
         },
         nonZero: checkCallBased({
-            checkFoldProbability: Math.min(0.1 * (state.toCall / state.prevPhasePot), 0.15),
-            callProbability: Math.min(0.5 * (state.toCall / state.prevPhasePot), 0.75),
+            checkFoldProbability: Math.min(0.05 * (state.toCall / state.prevPhasePot), 0.1),
+            callProbability: Math.min(0.5 * (state.toCall / state.prevPhasePot), 0.65),
             remainingMinRaiseShare: 0.4,
             remainingHalfPotRaiseShare: 0.33,
             remainingPotRaiseShare: 0.24,
@@ -38,15 +38,15 @@ export function strongHandAction(state: State): Action {
 export function riskyHandAction(state: State): Action {
     return probabilisticAction(postfixNameToCall("risky", state), state, toCallDependent(state, {
         zero: {
-            checkFoldProbability: 0.5,
-            minRaiseProbability: 0.22,
+            checkFoldProbability: 0.3,
+            minRaiseProbability: 0.42,
             halfPotRaiseProbability: 0.17,
             potRaiseProbability : 0.09,
             allInProbability: 0.02,
         },
         nonZero: checkCallBased({
-            checkFoldProbability: Math.min(0.4 * (state.toCall / state.prevPhasePot), 0.35),
-            callProbability: Math.min(1.1 * (state.toCall / state.prevPhasePot), 0.55),
+            checkFoldProbability: Math.min(0.4 * (state.toCall / state.prevPhasePot), 0.2),
+            callProbability: Math.min(1.1 * (state.toCall / state.prevPhasePot), 0.6),
             remainingMinRaiseShare: 0.4,
             remainingHalfPotRaiseShare: 0.33,
             remainingPotRaiseShare: 0.24,
@@ -58,18 +58,18 @@ export function riskyHandAction(state: State): Action {
 export function weakHandAction(state: State): Action {
     return probabilisticAction(postfixNameToCall("weak", state), state, toCallDependent(state, {
         zero: {
-            checkFoldProbability: 0.7,
-            minRaiseProbability: 0.05,
-            halfPotRaiseProbability: 0.11,
-            potRaiseProbability : 0.13,
-            allInProbability: 0.01,
+            checkFoldProbability: 0.4,
+            minRaiseProbability: 0.1,
+            halfPotRaiseProbability: 0.27,
+            potRaiseProbability : 0.2,
+            allInProbability: 0.03,
         },
         nonZero: checkCallBased({
-            checkFoldProbability: Math.min(2 * (state.toCall / state.prevPhasePot), 0.7),
-            callProbability: (1 - (state.toCall / state.prevPhasePot)) * 0.05,
-            remainingMinRaiseShare: 0.05,
-            remainingHalfPotRaiseShare: 0.4,
-            remainingPotRaiseShare: 0.45,
+            checkFoldProbability: Math.min(2 * (state.toCall / state.prevPhasePot), 0.5),
+            callProbability: (1 - (state.toCall / state.prevPhasePot)) * 0.2,
+            remainingMinRaiseShare: 0.2,
+            remainingHalfPotRaiseShare: 0.32,
+            remainingPotRaiseShare: 0.38,
             remainingAllInShare: 0.1,
         }),
     }));
@@ -78,19 +78,19 @@ export function weakHandAction(state: State): Action {
 export function bluffHandAction(state: State): Action {
     return probabilisticAction(postfixNameToCall("bluff", state), state, toCallDependent(state, {
         zero: {
-            checkFoldProbability: 0.9,
-            minRaiseProbability: 0.02,
-            halfPotRaiseProbability: 0.01,
-            potRaiseProbability : 0.02,
-            allInProbability: 0.02,
+            checkFoldProbability: 0.7,
+            minRaiseProbability: 0.1,
+            halfPotRaiseProbability: 0.07,
+            potRaiseProbability : 0.1,
+            allInProbability: 0.03,
         },
         nonZero: checkCallBased({
-            checkFoldProbability: Math.min(2 * (state.toCall / state.prevPhasePot), 0.95),
-            callProbability: 0,
-            remainingMinRaiseShare: 0.02,
+            checkFoldProbability: Math.min(2 * (state.toCall / state.prevPhasePot), 0.7),
+            callProbability: 0.1,
+            remainingMinRaiseShare: 0.15,
             remainingHalfPotRaiseShare: 0.32,
-            remainingPotRaiseShare: 0.63,
-            remainingAllInShare: 0.03,
+            remainingPotRaiseShare: 0.43,
+            remainingAllInShare: 0.1,
         }),
     }));
 }

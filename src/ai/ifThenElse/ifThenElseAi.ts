@@ -1,6 +1,6 @@
 import { FlushRank, FullHouseRank, HighCardRank, PairRank, StraightRank, ThreeOfKindRank, TwoPairRank } from "../../rank";
 import { PreflopPhase } from "../../state";
-import { isOneCardFlushPossible, isOneCardStraightPossible, isOpenEndedStraightPresent } from "../aiUtils";
+import { getPairs, isOneCardFlushPossible, isOneCardStraightPossible, isOpenEndedStraightPresent } from "../aiUtils";
 import { flushAction } from "./flushAction";
 import { bestHandAction, bluffHandAction } from "./handActions";
 import { highCardAction } from "./highCardAction";
@@ -18,6 +18,7 @@ export function ifThenElseAction(state: State): Action {
             openStraight: isOpenEndedStraightPresent(state.handPlusBoard),
             oneCardFlush: isOneCardFlushPossible(state.board),
             oneCardStraight: isOneCardStraightPossible(state.board),
+            boardPairs: getPairs(state.board),
         });
     }
 

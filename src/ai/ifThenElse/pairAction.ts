@@ -11,6 +11,10 @@ export function pairAction(state: State): Action {
     if (boardPairs.length > 0)
         return highCardAction(state);
 
+    return pairActionIgnoringBoardPair(state);
+}
+
+export function pairActionIgnoringBoardPair(state: State): Action {
     const myPair = getPairs(state.handPlusBoard)[0];
 
     if (!myPair || myPair.length === 0)

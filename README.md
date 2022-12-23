@@ -1,13 +1,17 @@
+# Overview
+
 This is poker bot implemented for https://www.pokernow.club/ as a chrome extension.
 
 If you are working on Visual Studio Code you can press CTRL+SHIFT+V to view this readme with a nicer interface.
 Otherwise you can paste the contents into https://markdownlivepreview.com/
 
-To use the poker bot, you first need to build it. Instructions follow below.
+To use the poker bot:
 
-Then you need to add the build as a chrome extension.
+* you first need to build it (instructions follow in the next sections)
 
-To run the bot in the browser, click on the extension icon in chrome and then on the "start bot" button.
+* add the build as a chrome extension
+
+* run the bot in the browser by click on the extension icon in chrome and then on the "start bot" button
 
 If you want to edit the code to make your own bot, see the detailed instructions at the end of this readme.
 TL;DR implement the `getAction` function in `src/ai/ai.ts`.
@@ -56,15 +60,16 @@ In `src/ai/aiUtils.ts` you can find functions for common logic such as:
 
 In `src/ai/probabilisticAction.ts` you find utilities for randomly weighted actions.
 
-If you need to do or read something on the web page that I didn't code already, you should write a function in `src/ui.ts` that contains all code interacting with the page.
+If you need to do or read something on the web page that I didn't code already, you should write a function in `src/ui.ts`, which contains all code interacting with the page.
 Typically you will call `document.querySelector(...)` with a css selector to get a dom element and do something with it.
 
 Note that the extension only runs when you're on `https://www.pokernow.club`.
-If you need to run it somewhere else you need to edit `public/manifest.json` and change the line:
+If you need to run it somewhere else you need to edit `public/manifest.json` and change the following line to fit your use case:
 ```
 "matches": ["https://www.pokernow.club/*"],
 ```
-to
+
+To enable the extension everywhere simply use:
 ```
 "matches": ["<all_urls>"],
 ```

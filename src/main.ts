@@ -5,7 +5,7 @@ import { performAction, sanitizeAction } from "./action";
 
 let botLoopTimeout: NodeJS.Timer | undefined;
 
-console.log("pokerbot v0.2");
+console.log(`"pokerbot v${chrome.runtime.getManifest().version}"`);
 
 function startBotLoop() {
     stopBotLoop();

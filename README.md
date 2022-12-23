@@ -59,12 +59,15 @@ In `src/ai/probabilisticAction.ts` you find utilities for randomly weighted acti
 If you need to do or read something on the web page that I didn't code already, you should write a function in `src/ui.ts` that contains all code interacting with the page.
 Typically you will call `document.querySelector(...)` with a css selector to get a dom element and do something with it.
 
-Whenever you edit the code you need to:
+Whenever you edit any code you need to:
+* (optional) increase the version in `public/manifest.json`
 * rebuild the extension
 * reload the extension in the browser
 * refresh the pokernow page
 * restart the bot
 
+I recommend you always increase the version because this is logged in the browser console when the extension is loaded (look for "pokerbot vX.Y") and lets you easily make sure that you succesfully updated the bot.
+Otherwise you might risk running an older version without realizing it.
 
 # Debugging
 

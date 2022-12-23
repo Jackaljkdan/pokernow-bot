@@ -22,7 +22,7 @@ First, install dependencies:
 npm i
 ```
 
-The "i" in the command stands for install. You need only run this once.
+The `i` in the command stands for install. You need only run this once.
 
 
 To build, execute this command in the root folder of this project:
@@ -49,7 +49,7 @@ I suggest you create a folder for you code under `src/ai` like I did for the if-
 
 Then you need to edit `src/ai/ai.ts` to call your code instead.
 
-In `src/ai/aiUtils.ts` you can find function for common logic such as:
+In `src/ai/aiUtils.ts` you can find functions for common logic such as:
 * what pairs are there in this list of cards?
 * is there an open ended straight draw in this list?
 * what's the highest card in this list?
@@ -58,6 +58,18 @@ In `src/ai/probabilisticAction.ts` you find utilities for randomly weighted acti
 
 If you need to do or read something on the web page that I didn't code already, you should write a function in `src/ui.ts` that contains all code interacting with the page.
 Typically you will call `document.querySelector(...)` with a css selector to get a dom element and do something with it.
+
+Note that the extension only runs when you're on `https://www.pokernow.club`.
+If you need to run it somewhere else you need to edit `public/manifest.json` and change the line:
+```
+"matches": ["https://www.pokernow.club/*"],
+```
+to
+```
+"matches": ["<all_urls>"],
+```
+
+## Apply code changes to the extension
 
 Whenever you edit any code you need to:
 * (optional) increase the version in `public/manifest.json`

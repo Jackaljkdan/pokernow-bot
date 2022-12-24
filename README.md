@@ -2,7 +2,8 @@
 
 This is poker bot implemented for https://www.pokernow.club/ as a chrome extension.
 
-If you are working on Visual Studio Code you can press CTRL+SHIFT+V to view this readme with a nicer interface.
+If you are reading on GitHub you are already seeing the formatted pretty version of this readme.
+If you are working on Visual Studio Code you can press CTRL+SHIFT+V to get the same visualization.
 Otherwise you can paste the contents into https://markdownlivepreview.com/
 
 To use the poker bot:
@@ -11,7 +12,7 @@ To use the poker bot:
 
 * add the build as a chrome extension
 
-* run the bot in the browser by click on the extension icon in chrome and then on the "start bot" button
+* run the bot in the browser by clicking on the extension icon in chrome and then on the "start bot" button
 
 If you want to edit the code to make your own bot, see the detailed instructions at the end of this readme.
 TL;DR implement the `getAction` function in `src/ai/ai.ts`.
@@ -21,7 +22,9 @@ TL;DR implement the `getAction` function in `src/ai/ai.ts`.
 
 You need node js to build the extension. I used version v14.18.1, I don't know if it works with any other version.
 
-First, install dependencies:
+After downloading and installing node js, open a terminal in the root of the project.
+
+Run this command to install dependencies:
 ```
 npm i
 ```

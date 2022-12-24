@@ -3,6 +3,7 @@ import { getBigBlindValue, getState, isMyTurn, showHandIfPossible } from "./ui";
 import { performAction, sanitizeAction } from "./action";
 
 
+const timeoutMs = 500;
 let botLoopTimeout: NodeJS.Timer | undefined;
 
 console.log(`"pokerbot v${chrome.runtime.getManifest().version}"`);
@@ -34,10 +35,10 @@ function startBotLoop() {
             const sanitizedAction = sanitizeAction(action, state);
             console.log("sanitized bot action:", sanitizedAction);
 
-            performAction(sanitizedAction, () => setTimeout(botLoop, 500));
+            performAction(sanitizedAction, () => setTimeout(botLoop, timeoutMs));
         }
         else {
-            botLoopTimeout = setTimeout(botLoop, 500);
+            botLoopTimeout = setTimeout(botLoop, timeoutMs);
         }
 
         showHandIfPossible();

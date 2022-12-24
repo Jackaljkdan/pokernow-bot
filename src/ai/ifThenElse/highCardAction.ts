@@ -3,7 +3,7 @@ import { hasFlushDrawOrOpenEndedStraight } from "../aiUtils";
 import { bluffHandAction, riskyHandAction, strongHandAction, weakHandAction } from "./handActions";
 
 
-export function highCardAction(state: State): Action {    
+export function highCardAction(state: State): Action {
     if (state.phase.code < RiverPhase.code) {
         if (hasFlushDrawOrOpenEndedStraight(state.handPlusBoard)) {
             if (state.phase === FlopPhase)

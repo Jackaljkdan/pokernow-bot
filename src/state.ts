@@ -32,7 +32,3 @@ export function getPhaseFromBoardLength(length: number) {
             return RiverPhase;
     }
 }
-
-export function isPhaseBefore(src: Phase, target: Phase) {
-    return src.code < target.code;
-}

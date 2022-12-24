@@ -8,6 +8,10 @@ export function hasFlushDrawOrOpenEndedStraight(cards: Card[]) {
     return isOneCardFlushPossible(cards) || isOpenEndedStraightPresent(cards);
 }
 
+/**
+ * Is only one more card needed for a flush?
+ * In other words returns if there are four cards of the same suit.
+ */
 export function isOneCardFlushPossible(cards: Card[]) {
     const counts: Partial<Record<CardSuit, number>> = {};
     
@@ -25,6 +29,9 @@ export function isOneCardFlushPossible(cards: Card[]) {
     return false;
 }
 
+/**
+ * Is only one more card needed for a straight?
+ */
 export function isOneCardStraightPossible(cards: Card[]) {
     // TODO: gestisci asso in scala A2345
 
@@ -64,6 +71,11 @@ export function isOneCardStraightPossible(cards: Card[]) {
     return false;
 }
 
+/**
+ * Is there an open ended straight in these cards?
+ * An open ended straight is one where either the top or bottom card is missing,
+ * for instance 8,7,6,5 is an open ended straight because it's missing either a 9 or a 4
+ */
 export function isOpenEndedStraightPresent(cards: Card[]) {
     // TODO: gestisci asso in scala A2345
 
@@ -174,6 +186,9 @@ export function getValueCounts(cards: Card[]) {
     return counts;
 }
 
+/**
+ * If `n === 2` then this is equal to @see getPairs
+ */
 export function getNs(cards: Card[], n: number) {
     const counts = getValueCounts(cards);
 
@@ -188,12 +203,18 @@ export function getNs(cards: Card[], n: number) {
     return ns;
 }
 
+/**
+ * Returns a list of all pairs in `cards`
+ */
 export function getPairs(cards: Card[]) {
     const pairs = getNs(cards, 2);
     return pairs;
 }
 
-export function getThrees(cards: Card[]) {
+/**
+ * Returns a list of all triplets (three cards of the same value) in `cards`
+ */
+export function getTriplets(cards: Card[]) {
     const threes = getNs(cards, 3);
     return threes;
 }

@@ -55,9 +55,9 @@ export function sanitizeAction(action: Action | undefined, state: State) {
         switch (sanitized.raiseAmount) {
             case "min":
             case "1/2_pot":
-            case "3/4_pot":
+            // case "3/4_pot":
             case "pot":
-            case "overbet":
+            // case "overbet":
             case "all_in":
                 // ok, no problem here
                 break;

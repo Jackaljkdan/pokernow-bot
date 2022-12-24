@@ -1,12 +1,12 @@
 import { AceCode, KingCode } from "../../cards";
 import { RiverPhase } from "../../state";
-import { getHighestCard, getPairs, getThrees, hasFlushDrawOrOpenEndedStraight, isOneCardFlushOrStraightPossible } from "../aiUtils";
+import { getHighestCard, getPairs, getTriplets, hasFlushDrawOrOpenEndedStraight, isOneCardFlushOrStraightPossible } from "../aiUtils";
 import { bestHandAction, riskyHandAction, strongHandAction } from "./handActions";
 import { highCardAction } from "./highCardAction";
 
 
 export function threeAction(state: State): Action {
-    const threes = getThrees(state.board);
+    const threes = getTriplets(state.board);
     
     if (threes.length !== 0) {
         const kicker = getHighestCard(state.hand)!;

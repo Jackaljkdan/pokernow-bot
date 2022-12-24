@@ -36,6 +36,16 @@ export type CheckCallBasedProbabilisticActionArgs = {
 }
 
 
+/**
+ * Returs an action chosen randomly according to the probabilities you pass in `args`.
+ * 
+ * Note that if to call is zero then the call probability is forced to zero
+ * and that the probabilities are always normalized such that they sum to 1.
+ * `args` is not modified in this process.
+ * 
+ * This function logs all info regarding the choice, including a `name` you provide
+ * that is very convenient when debugging.
+ */
 export function probabilisticAction(name: string, state: State, args: ProbabilisticActionArgs): Action {
     const copy = {...args};
     
@@ -54,6 +64,7 @@ export function probabilisticAction(name: string, state: State, args: Probabilis
                 input: args,
                 normalized,
                 random,
+                chosen: probabilityToAction[key],
             });
             return probabilityToAction[key];
         }
@@ -64,6 +75,9 @@ export function probabilisticAction(name: string, state: State, args: Probabilis
     return { type: "check_or_fold" };
 }
 
+/**
+ * Returns a normalized version of `args` such that the probabilities sum to 1
+ */
 function normalize(args: ProbabilisticActionArgs): ProbabilisticActionArgs {
     let sum = 0;
 
@@ -91,6 +105,9 @@ export function toCallDependent(state: State, args: ToCallDependent): Probabilis
     };
 }
 
+/**
+ * Appends "-call" if `state.toCall > 0` and "-zero" otherwise
+ */
 export function postfixNameToCall(name: string, state: State) {
     if (state.toCall > 0)
         return name + "-call";
@@ -98,6 +115,26 @@ export function postfixNameToCall(name: string, state: State) {
         return name + "-zero";
 }
 
+/**
+ * This let's you specify directly only check/fold and call probabilities, while allowing you
+ * to specify the raise probabilities proportional to whatever is left.
+ * 
+ * This is only useful if you don't know a priori the probability of either check/fold of call,
+ * because for instance they are the result of a computation
+ * (imagine that you want to fold with a probability based on the amount to call).
+ * 
+ * @example
+ * // imagine that you want to code a probabilistic bluff raise
+ * // an that state.toCall === 75 and state.prevPhasePot === 100
+ * // the following will make you fold 75% of the time
+ * // pot raise 25% * 0.8 = 20% of the time
+ * // go all in 25% * 0.2 = 5% of the time
+ * checkCallBased({
+ *     checkFoldProbability: state.toCall / state.prevPhasePot,
+ *     remainingPotRaiseShare: 0.8,
+ *     remainingAllInShare: 0.2,
+ * })
+ */
 export function checkCallBased(args: CheckCallBasedProbabilisticActionArgs): ProbabilisticActionArgs {
     const sum = args.callProbability + args.checkFoldProbability;
     const remaining = Math.max(1 - sum, 0);
@@ -112,6 +149,9 @@ export function checkCallBased(args: CheckCallBasedProbabilisticActionArgs): Pro
     };
 }
 
+/**
+ * Returns a copy of `args` where undefined probabilities are set to 0
+ */
 export function zeroFill(args: Partial<ProbabilisticActionArgs>): ProbabilisticActionArgs {
     for (const key of ProbabilisticActionArgsKeys)
         if (args[key] == undefined)
@@ -120,6 +160,9 @@ export function zeroFill(args: Partial<ProbabilisticActionArgs>): ProbabilisticA
     return args as ProbabilisticActionArgs;
 }
 
+/**
+ * Returns a copy of `args` where undefined probabilities get an equal share of the remaining probability
+ */
 export function uniformFill(args: Partial<ProbabilisticActionArgs>): ProbabilisticActionArgs {
     const undefinedCount = countUndefinedActions(args);
     const definedSum = sumDefinedActions(args);

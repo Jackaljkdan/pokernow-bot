@@ -1,10 +1,10 @@
-import { isPhaseBefore, RiverPhase } from "../../state";
+import { RiverPhase } from "../../state";
 import { probabilisticAction, postfixNameToCall, toCallDependent, uniformFill, zeroFill, checkCallBased } from "../probabilisticAction";
 
 
 export function bestHandAction(state: State): Action {
     return probabilisticAction(postfixNameToCall("best", state), state, uniformFill({
-        checkFoldProbability: state.toCall === 0 && isPhaseBefore(state.phase, RiverPhase)
+        checkFoldProbability: state.toCall === 0 && state.phase.code < RiverPhase.code
             ? undefined
             : 0
         ,

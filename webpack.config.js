@@ -5,7 +5,8 @@ const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
     mode: "development",
-    devtool: 'cheap-module-source-map',
+    // devtool: 'cheap-module-source-map',
+    devtool: 'source-map',
     entry: {
         popup: './src/pages/popup.ts',
         main: './src/main.ts',

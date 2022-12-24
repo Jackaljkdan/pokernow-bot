@@ -51,6 +51,8 @@ Note that you need to select the `/dist` folder, not the project root!
 
 I suggest you create a folder for you code under `src/ai` like I did for the if-then-else bot.
 
+In your code you need to implement a `getAction(state: State): Action` function.
+
 Then you need to edit `src/ai/ai.ts` to call your code instead.
 
 In `src/ai/aiUtils.ts` you can find functions for common logic such as:
@@ -60,8 +62,14 @@ In `src/ai/aiUtils.ts` you can find functions for common logic such as:
 
 In `src/ai/probabilisticAction.ts` you find utilities for randomly weighted actions.
 
+The code checks every half second if it's the bot's turn in `src/main.ts` and when it is the `getAction` function is called.
+
+If `getAction` throws an exception or returns a nonsensical action, the bot will check or fold.
+
 If you need to do or read something on the web page that I didn't code already, you should write a function in `src/ui.ts`, which contains all code interacting with the page.
 Typically you will call `document.querySelector(...)` with a css selector to get a dom element and do something with it.
+
+If you want to edit the popup that opens when you click the extension icon look into `src/pages`.
 
 Note that the extension only runs when you're on `https://www.pokernow.club`.
 If you need to run it somewhere else you need to edit `public/manifest.json` and change the following line to fit your use case:
@@ -88,4 +96,23 @@ Otherwise you might risk running an older version without realizing it.
 
 # Debugging
 
-// TODO
+This is basic js stuff: when you `console.log` something remember that chrome will let you thoroughly inspect any object you pass.
+
+This means that if you do something like:
+```
+console.log("some message", {
+    someField: {
+        someNestedField: ...
+    },
+    someOtherField: ...
+});
+```
+You will be able to see all (nested) fields in the console.
+
+By default my code will log the state of the game, some stats, the action it gets as output of the `getAction` function and the sanitized action.
+
+If you need to debug line by line with the chrome debugger, look for any line logged by the bot. At the right border you will find a clickable link like `main.js:1234`. This will take you to line `1234` of the build output javascript. Here you can place any breakpoint you need.
+
+The build output is largely 1:1 with respect to the typescript source, it's not obfuscated or uglyfied, so you should have no trouble following it.
+
+Unfortunately I have not found a way to debug on the original source, despite a sourcemap being generated in the webpack config. If you do, tell me!

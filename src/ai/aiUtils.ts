@@ -1,4 +1,4 @@
-import { AceCode } from "../cards";
+import { AceCode, LowestStraightAceCode } from "../cards";
 
 export function isOneCardFlushOrStraightPossible(cards: Card[]) {
     return isOneCardFlushPossible(cards) || isOneCardStraightPossible(cards);
@@ -33,8 +33,35 @@ export function isOneCardFlushPossible(cards: Card[]) {
  * Is only one more card needed for a straight?
  */
 export function isOneCardStraightPossible(cards: Card[]) {
-    // TODO: gestisci asso in scala A2345
+    if (isSimpleOneCardStraightPossible(cards))
+        return true;
+    
+    if (cards.length < 4)
+        return false;
 
+    const firstAceIndex = cards.findIndex(c => c.value.code === AceCode);
+
+    if (firstAceIndex < 0)
+        return false;
+
+    const firstAce = cards[firstAceIndex];
+
+    const lowestAceCards = [...cards];
+    lowestAceCards[firstAceIndex] = {
+        ...firstAce,
+        value: {
+            ...firstAce.value,
+            code: LowestStraightAceCode,
+        },
+    };
+
+    return isSimpleOneCardStraightPossible(lowestAceCards);
+}
+
+/**
+ * Simple because it does not account for A in both A2345 and TJQKA
+ */
+function isSimpleOneCardStraightPossible(cards: Card[]) {
     if (cards.length < 4)
         return false;
 
@@ -77,8 +104,6 @@ export function isOneCardStraightPossible(cards: Card[]) {
  * for instance 8,7,6,5 is an open ended straight because it's missing either a 9 or a 4
  */
 export function isOpenEndedStraightPresent(cards: Card[]) {
-    // TODO: gestisci asso in scala A2345
-
     if (cards.length < 4)
         return false;
 

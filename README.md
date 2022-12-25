@@ -14,6 +14,8 @@ To use the poker bot:
 
 * run the bot in the browser by clicking on the extension icon in chrome and then on the "start bot" button
 
+* if you want to run many bots, you will need to use something [like this](https://chrome.google.com/webstore/detail/sessionbox-multi-login-to/megbklhjamjbcafknkgmokldgolkdfig)
+
 If you want to edit the code to make your own bot, see the detailed instructions at the end of this readme.
 TL;DR implement the `getAction` function in `src/ai/ai.ts`.
 

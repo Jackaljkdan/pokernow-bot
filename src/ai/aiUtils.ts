@@ -82,7 +82,7 @@ function isSimpleOneCardStraightPossible(cards: Card[]) {
     if (cards.length < 4)
         return false;
 
-    const sorted = sortInPlaceAscending([...cards]);
+    const sorted = removeDuplicateValuesInPlace([...cards]);
     const gapStraight = simpleFindFirstGapStraightOnSortedCards(sorted);
 
     return gapStraight !== null;
@@ -159,7 +159,7 @@ export function findBestGapStraight(cards: Card[]) {
     if (cards.length < 4)
         return null;
 
-    const sorted = sortInPlaceAscending([...cards]);
+    const sorted = removeDuplicateValuesInPlace([...cards]);
 
     for (let i = cards.length - 4; i >= 0; i--) {
         const gapStraight = simpleFindFirstGapStraightOnSortedCards(sorted, i);
@@ -185,7 +185,7 @@ export function isOpenEndedStraightPresent(cards: Card[]) {
     if (cards.length < 4)
         return false;
 
-    const sorted = sortInPlaceAscending([...cards]);
+    const sorted = removeDuplicateValuesInPlace([...cards]);
     const consecutives = findFirstConsecutives(sorted, 0);
 
     if (consecutives === null)
@@ -198,7 +198,7 @@ export function findBestStraight(cards: Card[]) {
     if (cards.length < 5)
         return null;
 
-    const sorted = sortInPlaceAscending([...cards]);
+    const sorted = removeDuplicateValuesInPlace([...cards]);
 
     for (let i = sorted.length - 5; i >= 0; i--) {
         const straight = findFirstStraightOnSortedCards(sorted, i);
@@ -213,7 +213,7 @@ export function findFirstStraight(cards: Card[], startIndex = 0) {
     if (cards.length < 5)
         return null;
 
-    const sorted = sortInPlaceAscending([...cards]);
+    const sorted = removeDuplicateValuesInPlace([...cards]);
     return findFirstStraightOnSortedCards(sorted, startIndex);
 }
 
@@ -402,4 +402,13 @@ export function getLowestCard(cards: Card[]) {
 
 export function sortInPlaceAscending(cards: Card[]): Card[] {
     return cards.sort((c1, c2) => c1.value.code - c2.value.code);
+}
+
+export function removeDuplicateValuesInPlace(cards: Card[]): Card[] {
+    for (let i = 0; i < cards.length - 1; i++) {
+        while (i+1 < cards.length && cards[i].value.code === cards[i+1].value.code)
+            cards.splice(i, 1);
+    }
+
+    return cards;
 }

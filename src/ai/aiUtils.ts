@@ -39,10 +39,19 @@ export function isOneCardStraightPossible(cards: Card[]) {
     if (cards.length < 4)
         return false;
 
+    const lowestAceCards = useSortedLowestAce(cards);
+    
+    if (lowestAceCards === null)
+        return false;
+
+    return isSimpleOneCardStraightPossible(lowestAceCards);
+}
+
+function useLowestAce(cards: Card[]) {
     const firstAceIndex = cards.findIndex(c => c.value.code === AceCode);
 
     if (firstAceIndex < 0)
-        return false;
+        return null;
 
     const firstAce = cards[firstAceIndex];
 
@@ -55,7 +64,15 @@ export function isOneCardStraightPossible(cards: Card[]) {
         },
     };
 
-    return isSimpleOneCardStraightPossible(lowestAceCards);
+    return lowestAceCards;
+}
+
+function useSortedLowestAce(cards: Card[]) {
+    const lowestAceCards = useLowestAce(cards);
+    if (lowestAceCards === null)
+        return null;
+
+    return sortInPlaceAscending(lowestAceCards);
 }
 
 /**
@@ -66,36 +83,97 @@ function isSimpleOneCardStraightPossible(cards: Card[]) {
         return false;
 
     const sorted = sortInPlaceAscending([...cards]);
-    const consecutives = findFirstConsecutives(sorted, 0);
+    const gapStraight = simpleFindFirstGapStraightOnSortedCards(sorted);
+
+    return gapStraight !== null;
+}
+
+type GapStraight = {
+    firstPiece: Consecutives,
+    secondPiece?: Consecutives,
+};
+
+/**
+ * Simple because it does not account for A in both A2345 and TJQKA
+ */
+function simpleFindFirstGapStraightOnSortedCards(sorted: Card[], startIndex = 0): GapStraight | null {
+    const consecutives = findFirstConsecutives(sorted, startIndex);
    
     if (consecutives === null)
-        return false;
+        return null;
 
     if (consecutives.count >= 4)
-        return true;
+        return { firstPiece: consecutives };
 
     if (consecutives.count === 2) {
-        const followingConsecutives = findFirstConsecutives(cards, consecutives.startIndex + consecutives.count);
+        const followingConsecutives = findFirstConsecutives(sorted, consecutives.startIndex + consecutives.count);
 
         if (followingConsecutives === null)
-            return false;
+            return null;
         
-        return consecutives.min.value.code + 3 === followingConsecutives.min.value.code;
+        if (consecutives.min.value.code + 3 === followingConsecutives.min.value.code) {
+            return {
+                firstPiece: consecutives,
+                secondPiece: followingConsecutives,
+            };
+        }
+
+        return null;
     }
 
     // consecutives count is 3
 
     if (consecutives.startIndex > 0) {
-        if (consecutives.min.value.code === sorted[consecutives.startIndex - 1].value.code + 2)
-            return true;
+        if (consecutives.min.value.code === sorted[consecutives.startIndex - 1].value.code + 2) {
+            return {
+                firstPiece: {
+                    startIndex: consecutives.startIndex - 1,
+                    count: 1,
+                    min: sorted[consecutives.startIndex - 1],
+                },
+                secondPiece: consecutives,
+            };
+        }
     }
 
     if (consecutives.startIndex + 3 < sorted.length) {
-        if (consecutives.min.value.code + 4 === sorted[consecutives.startIndex + 3].value.code)
-            return true;
+        if (consecutives.min.value.code + 4 === sorted[consecutives.startIndex + 3].value.code) {
+            return {
+                firstPiece: consecutives,
+                secondPiece: {
+                    startIndex: consecutives.startIndex + 3,
+                    count: 1,
+                    min: sorted[consecutives.startIndex + 3],
+                },
+            }
+        }
     }
 
-    return false;
+    return null;
+}
+
+/**
+ * A gap straight is one that is missing one of the 5 cards
+ */
+export function findBestGapStraight(cards: Card[]) {
+    if (cards.length < 4)
+        return null;
+
+    const sorted = sortInPlaceAscending([...cards]);
+
+    for (let i = cards.length - 4; i >= 0; i--) {
+        const gapStraight = simpleFindFirstGapStraightOnSortedCards(sorted, i);
+
+        if (gapStraight !== null)
+            return gapStraight;
+    }
+
+    const lowestAceCards = useSortedLowestAce(sorted);
+    if (lowestAceCards === null)
+        return null;
+
+    const lowestGapStraight = simpleFindFirstGapStraightOnSortedCards(lowestAceCards);
+    return lowestGapStraight;
 }
 
 /**
@@ -114,6 +192,64 @@ export function isOpenEndedStraightPresent(cards: Card[]) {
         return false;
 
     return consecutives.count >= 4;
+}
+
+export function findBestStraight(cards: Card[]) {
+    if (cards.length < 5)
+        return null;
+
+    const sorted = sortInPlaceAscending([...cards]);
+
+    for (let i = sorted.length - 5; i >= 0; i--) {
+        const straight = findFirstStraightOnSortedCards(sorted, i);
+        if (straight !== null)
+            return straight;
+    }
+
+    return null;
+}
+
+export function findFirstStraight(cards: Card[], startIndex = 0) {
+    if (cards.length < 5)
+        return null;
+
+    const sorted = sortInPlaceAscending([...cards]);
+    return findFirstStraightOnSortedCards(sorted, startIndex);
+}
+
+function findFirstStraightOnSortedCards(sorted: Card[], startIndex = 0) {
+    const straight = simpleFindFirstStraightOnSortedCards(sorted, startIndex);
+    if (straight !== null)
+        return straight;
+    
+    if (sorted.length < 5 || startIndex > 0)
+        return null;
+
+    const lowestAceCards = useSortedLowestAce(sorted);
+
+    if (lowestAceCards === null)
+        return null;
+
+    sortInPlaceAscending(lowestAceCards);
+
+    return simpleFindFirstStraightOnSortedCards(lowestAceCards);
+}
+
+/**
+ * Simple because it does not account for A in both A2345 and TJQKA
+ */
+function simpleFindFirstStraightOnSortedCards(sorted: Card[], startIndex = 0) {
+    if (sorted.length < 5)
+        return null;
+
+    for (let i = startIndex; i < sorted.length - 5; i++) {
+        const consecutives = findFirstConsecutives(sorted, i);
+
+        if (consecutives !== null && consecutives.count >= 5)
+            return consecutives;
+    }
+
+    return null;
 }
 
 type Consecutives = {

@@ -1,5 +1,5 @@
 import { AceCode } from "../cards";
-import { findBestGapStraight, isOneCardStraightPossible } from "./aiUtils";
+import { findBestGapStraight, isOneCardStraightPossible, removeDuplicateValuesInPlace } from "./aiUtils";
 
 let cards: Card[];
 
@@ -83,3 +83,155 @@ console.log("best gap test", {
     cards,
     gap: findBestGapStraight(cards),
 });
+
+
+const _23445: Card[] = [
+    {
+        suit: "c",
+        value: {
+            name: "2",
+            code: 2,
+        },
+    },
+    {
+        suit: "c",
+        value: {
+            name: "3",
+            code: 3,
+        },
+    },
+    {
+        suit: "c",
+        value: {
+            name: "4",
+            code: 4,
+        },
+    },
+    {
+        suit: "c",
+        value: {
+            name: "4",
+            code: 4,
+        },
+    },
+    {
+        suit: "c",
+        value: {
+            name: "5",
+            code: 5,
+        },
+    },
+];
+
+const _234445: Card[] = [
+    {
+        suit: "c",
+        value: {
+            name: "2",
+            code: 2,
+        },
+    },
+    {
+        suit: "c",
+        value: {
+            name: "3",
+            code: 3,
+        },
+    },
+    {
+        suit: "c",
+        value: {
+            name: "4",
+            code: 4,
+        },
+    },
+    {
+        suit: "c",
+        value: {
+            name: "4",
+            code: 4,
+        },
+    },
+    {
+        suit: "c",
+        value: {
+            name: "4",
+            code: 4,
+        },
+    },
+    {
+        suit: "c",
+        value: {
+            name: "5",
+            code: 5,
+        },
+    },
+];
+
+const _2344455: Card[] = [
+    {
+        suit: "c",
+        value: {
+            name: "2",
+            code: 2,
+        },
+    },
+    {
+        suit: "c",
+        value: {
+            name: "3",
+            code: 3,
+        },
+    },
+    {
+        suit: "c",
+        value: {
+            name: "4",
+            code: 4,
+        },
+    },
+    {
+        suit: "c",
+        value: {
+            name: "4",
+            code: 4,
+        },
+    },
+    {
+        suit: "c",
+        value: {
+            name: "4",
+            code: 4,
+        },
+    },
+    {
+        suit: "c",
+        value: {
+            name: "5",
+            code: 5,
+        },
+    },
+    {
+        suit: "c",
+        value: {
+            name: "5",
+            code: 5,
+        },
+    },
+];
+
+console.log("remove duplicates", {
+    first: _23445,
+    firstRemoved: removeDuplicateValuesInPlace([..._23445]),
+    second: _234445,
+    secondRemoved: removeDuplicateValuesInPlace([..._234445]),
+    third: _2344455,
+    thirdRemoved: removeDuplicateValuesInPlace([..._2344455]),
+});
+
+
+console.log("duplicate values straight", {
+    _23445,
+    gap: findBestGapStraight(_23445),
+});
+

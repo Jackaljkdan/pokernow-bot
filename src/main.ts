@@ -1,7 +1,6 @@
 import { getAction } from "./ai/ai";
 import { getBigBlindValue, getState, isMyTurn, showHandIfPossible } from "./ui";
 import { performAction, sanitizeAction } from "./action";
-import "./ai/tests";
 
 
 const timeoutMs = 500;

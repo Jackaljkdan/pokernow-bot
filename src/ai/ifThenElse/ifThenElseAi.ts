@@ -1,6 +1,5 @@
 import { FlushRank, FullHouseRank, HighCardRank, PairRank, StraightRank, ThreeOfKindRank, TwoPairRank } from "../../rank";
 import { PreflopPhase } from "../../state";
-import { getPairs, isOneCardFlushPossible, isOneCardStraightPossible, isOpenEndedStraightPresent } from "../aiUtils";
 import { flushAction } from "./flushAction";
 import { bestHandAction, bluffHandAction } from "./handActions";
 import { highCardAction } from "./highCardAction";
@@ -12,16 +11,6 @@ import { twoPairAction } from "./twoPairAction";
 
 
 export function ifThenElseAction(state: State): Action {
-    if (state.phase.code > PreflopPhase.code) {
-        console.log("stats", {
-            flushDraw: isOneCardFlushPossible(state.handPlusBoard),
-            openStraight: isOpenEndedStraightPresent(state.handPlusBoard),
-            oneCardFlush: isOneCardFlushPossible(state.board),
-            oneCardStraight: isOneCardStraightPossible(state.board),
-            boardPairs: getPairs(state.board),
-        });
-    }
-
     if (state.phase === PreflopPhase)
         return preflopAction(state);
     else if (state.handRank.code >= FullHouseRank.code)

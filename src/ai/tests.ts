@@ -1,5 +1,5 @@
 import { AceCode } from "../cards";
-import { findBestGapStraight, isOneCardStraightPossible, removeDuplicateValuesInPlace } from "./aiUtils";
+import { findBestGapStraight, isOneCardStraightPossible, removeSortedDuplicateValuesInPlace } from "./aiUtils";
 
 let cards: Card[];
 
@@ -222,11 +222,11 @@ const _2344455: Card[] = [
 
 console.log("remove duplicates", {
     first: _23445,
-    firstRemoved: removeDuplicateValuesInPlace([..._23445]),
+    firstRemoved: removeSortedDuplicateValuesInPlace([..._23445]),
     second: _234445,
-    secondRemoved: removeDuplicateValuesInPlace([..._234445]),
+    secondRemoved: removeSortedDuplicateValuesInPlace([..._234445]),
     third: _2344455,
-    thirdRemoved: removeDuplicateValuesInPlace([..._2344455]),
+    thirdRemoved: removeSortedDuplicateValuesInPlace([..._2344455]),
 });
 
 
